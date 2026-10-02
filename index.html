@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Foodie - Food Delivery</title>
+
+    <link rel="stylesheet"
+        href="style.css">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        🟠 Foodie
+    </div>
+
+    <div class="location">
+        📍
+        <div>
+            <small>Delivery to</small>
+            <strong>Setup your location⌄</strong>
+        </div>
+    </div>
+
+    <div class="search">
+
+        🔍
+
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Search for restaurant and food"
+            oninput="searchRestaurants()"
+        >
+
+    </div>
+
+    <div class="profile">
+        👤
+    </div>
+
+</header>
+
+
+<!-- ================= HOME ================= -->
+
+<main id="homePage">
+
+    <section class="restaurant-section">
+
+        <div class="section-header">
+
+            <h1>
+                Top restaurant chains in Bangalore
+            </h1>
+
+            <div class="arrows">
+
+                <button onclick="scrollRestaurants(-1)">
+                    ←
+                </button>
+
+                <button onclick="scrollRestaurants(1)">
+                    →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="restaurant-row"
+            id="topRestaurants"
+        >
+
+        </div>
+
+    </section>
+
+
+    <section class="restaurant-section">
+
+        <h1>
+            All Restaurants
+        </h1>
+
+        <div
+            class="restaurant-grid"
+            id="restaurantGrid"
+        >
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= RESTAURANT PAGE ================= -->
+
+<section
+    id="restaurantPage"
+    class="restaurant-page"
+    style="display:none;"
+>
+
+    <button
+        class="back-button"
+        onclick="goHome()"
+    >
+        ← Back to restaurants
+    </button>
+
+
+    <div
+        id="restaurantHeader"
+        class="restaurant-header"
+    >
+    </div>
+
+
+    <div class="menu-container">
+
+        <h2>
+            Menu
+        </h2>
+
+        <div
+            id="menuContainer"
+        >
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CUSTOMIZATION MODAL ================= -->
+
+<div
+    id="customizeModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeCustomize()"
+        >
+            ✕
+        </button>
+
+        <div id="customizeContent">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= CART ================= -->
+
+<div
+    id="cartOverlay"
+    class="cart-overlay"
+>
+
+    <div class="cart">
+
+        <div class="cart-header">
+
+            <h2>
+                Your Cart 🛒
+            </h2>
+
+            <button
+                onclick="closeCart()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div
+            id="cartItems"
+            class="cart-items"
+        >
+        </div>
+
+
+        <div class="cart-bottom">
+
+            <div class="bill-row">
+
+                <span>
+                    Item Total
+                </span>
+
+                <strong id="itemTotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+            <div class="bill-row">
+
+                <span>
+                    Delivery Fee
+                </span>
+
+                <strong>
+                    ₹40
+                </strong>
+
+            </div>
+
+            <div class="bill-row">
+
+                <span>
+                    Taxes
+                </span>
+
+                <strong id="tax">
+                    ₹0
+                </strong>
+
+            </div>
+
+            <hr>
+
+            <div class="bill-row total-row">
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="cartTotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <button
+                class="checkout-button"
+                onclick="openCheckout()"
+            >
+                Proceed to Checkout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CART BUTTON -->
+
+<button
+    id="floatingCart"
+    onclick="openCart()"
+>
+
+    🛒
+
+    <span id="cartCount">
+        0
+    </span>
+
+</button>
+
+
+<!-- ================= CHECKOUT ================= -->
+
+<div
+    id="checkoutModal"
+    class="modal"
+>
+
+    <div class="checkout-box">
+
+        <button
+            class="modal-close"
+            onclick="closeCheckout()"
+        >
+            ✕
+        </button>
+
+
+        <h2>
+            Delivery Details
+        </h2>
+
+
+        <input
+            id="customerName"
+            type="text"
+            placeholder="Your Name"
+        >
+
+
+        <input
+            id="customerPhone"
+            type="text"
+            placeholder="Phone Number"
+        >
+
+
+        <textarea
+            id="customerAddress"
+            placeholder="Complete Delivery Address"
+        ></textarea>
+
+
+        <button
+            class="place-order-button"
+            onclick="placeOrder()"
+        >
+            Place Order
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= SUCCESS ================= -->
+
+<div
+    id="successModal"
+    class="modal"
+>
+
+    <div class="success-box">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>
+            Order Placed!
+        </h2>
+
+        <p>
+            Your order has been successfully placed.
+        </p>
+
+        <h3 id="orderNumber">
+        </h3>
+
+        <button
+            onclick="goHome()"
+        >
+            Continue Ordering
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
